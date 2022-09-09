@@ -8,7 +8,6 @@ import {
   createUserWithEmailAndPassword,
   createUserWithPhoneNumberAndPassword,
   onAuthStateChanged,
-
 } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -28,33 +27,34 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-let user,errorCode,errorMessage;
-export const login=(email, password)=>{
+let user, errorCode, errorMessage;
+export const login = (email, password) => {
   const responce = signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in
-     user = userCredential.user;
-     console.log(user)
-    // ...
-  })
-  .catch((error) => {
-     errorCode = error.code;
-     errorMessage = error.message;
-     console.log(errorCode,"pl",errorMessage)
-  });
-}
-export const sigupwithemail=(email, password)=>{
+    .then((userCredential) => {
+      // Signed in
+      user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      errorCode = error.code;
+      errorMessage = error.message;
+    });
+};
+export const sigupwithemail = (email, password) => {
   createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
-}
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+    });
+};
+
+// To apply the default browser preference instead of explicitly setting it.
+// firebase.auth().useDeviceLanguage();
 
 //const analytics = getAnalytics(app);

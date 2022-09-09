@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function ProfileComponent() {
-  return (
-    <h1>ProfileComponent</h1>
-  )
+  return <h1>ProfileComponent</h1>;
 }
 
-export default ProfileComponent
+export default ProfileComponent;

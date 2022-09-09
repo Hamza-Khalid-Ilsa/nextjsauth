@@ -1,10 +1,11 @@
 import React from "react";
 import Header from "./Header";
-import Cookies,{getCookie} from "cookies-next";
+import { getCookie } from "cookies-next";
 import DashboardComponent from "../components/DashboardComponent";
 import { useRouter } from "next/router";
+import { initializeApp } from "firebase-admin/app";
 
-function Dashboard({props}) {
+function Dashboard({ props }) {
   return (
     <>
       <Header
@@ -14,25 +15,20 @@ function Dashboard({props}) {
     </>
   );
 }
-export async function getServerSideProps({req,res}) {
-    const cooki=getCookie("user",{req,res});
-    console.log("hmhmj",getCookie("user",{req,res}))
-    if(cooki === undefined)
-    {
-        return {
-            redirect: {
-              destination: "/login",
-              permanent: false,
-            },
-          };
-    }
-    else{
-        return {
-           props:{}
-          }
-
-    }
-    
+export async function getServerSideProps({ req, res }) {
+  const cooki = getCookie("user", { req, res });
+  if (cooki === undefined) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  } else {
+    return {
+      props: {},
+    };
   }
+}
 
 export default Dashboard;

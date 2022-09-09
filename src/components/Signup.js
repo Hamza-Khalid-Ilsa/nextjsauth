@@ -2,7 +2,7 @@ import { useState } from "react";
 import React from "react";
 import styles from "../styles/Home.module.css";
 import { sigupwithemail } from "../firebase";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -10,31 +10,23 @@ function Signup() {
   const [numberFlage, setNumberFlage] = useState();
   const [emailFlage, setEmailFlage] = useState();
   const [passFlage, setPassFlage] = useState();
-  const router = useRouter()
-
+  const router = useRouter();
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log(email);
     if (numberFlage == true && passFlage == true) {
-      console.log("All ok in number");
-      console.log(email, password);
     } else if (emailFlage == true && passFlage == true) {
-      console.log("All ok in email");
-      console.log(email, password);
-      sigupwithemail(email,password);
-      router.push("/login");      
-    }
-    else{
-      if(emailFlage==false || numberFlage==false)
-      {
-        window.alert("Wrong Email/Phone Number")
+      sigupwithemail(email, password);
+      router.push("/login");
+    } else {
+      if (emailFlage == false || numberFlage == false) {
+        window.alert("Wrong Email/Phone Number");
       }
-      if(passFlage==false)
-      {
-        window.alert("Password Must contain atleast one special character and atleast one number")
+      if (passFlage == false) {
+        window.alert(
+          "Password Must contain atleast one special character and atleast one number"
+        );
       }
-      
     }
   };
   const handlerChangeValue = (value = "") => {
@@ -43,14 +35,10 @@ function Signup() {
     var phone = /^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$/gm;
     const e = email.test(value);
     const p = phone.test(value);
-    console.log(e);
-    console.log(p);
     if (e == true) {
-      console.log(value);
       setNumberFlage(false);
       setEmailFlage(true);
     } else if (p == true) {
-      console.log(value);
       setNumberFlage(true);
       setEmailFlage(false);
     } else {
@@ -60,13 +48,9 @@ function Signup() {
   };
   const handlerChangePassword = (value = "") => {
     setPassword(value);
-    console.log(value);
-    const pass =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,20}$/;
+    const pass = /^^[a-zA-Z0-9_.-]{6,20}$/;
     const p = pass.test(value);
-    console.log(p);
     if (p == true) {
-      console.log(value, "password");
       setPassFlage(true);
     } else {
       setPassFlage(false);

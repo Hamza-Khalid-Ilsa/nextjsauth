@@ -1,30 +1,34 @@
 import React from "react";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 function Header(props) {
   let FirstHead = "",
     SecoundHead;
   if (props.head.link1 == "/signIn") {
-    FirstHead = "Sigin up";
-  } else {
-    FirstHead = "Profile";
-  }
-  if (props.head.link2 == "/login") {
+    FirstHead = "Sign up";
     SecoundHead = "Login";
   } else {
+    FirstHead = "Profile";
     SecoundHead = "Dashbord";
   }
+
   const Logout = () => {
+    const router = useRouter();
+
+    const logoutButton = () => {
+      Cookies.remove("user");
+      router.push("/login");
+    };
+
     if (props.head.link1 == "/Profile" || props.head.link2 == "/Dashboard") {
-      console.log(props.head.link1,"in logout")
       return (
         <li className={styles.li}>
-          <Link href="/login" >Logout</Link>
+          <a onClick={logoutButton}>Logout</a>
         </li>
       );
-    }
-    else{
+    } else {
       return;
     }
   };
@@ -36,7 +40,7 @@ function Header(props) {
       <li className={styles.li}>
         <Link href={props.head.link2}>{SecoundHead}</Link>
       </li>
-      <Logout/>
+      <Logout />
     </ul>
   );
 }

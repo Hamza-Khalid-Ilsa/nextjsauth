@@ -1,14 +1,14 @@
 import Header from "./Header";
 import styles from "../styles/Home.module.css";
 import React, { useEffect, useState } from "react";
-import Cookies,{getCookie} from "cookies-next";
+import Cookies, { getCookie } from "cookies-next";
 
 import Signup from "../components/Signup";
 
 function signIn(props) {
   return (
     <>
-      <Header  head={{link1 :"/signIn",link2:"/login", point:"login"}}/>
+      <Header head={{ link1: "/signIn", link2: "/login", point: "login" }} />
       <Signup />
     </>
   );

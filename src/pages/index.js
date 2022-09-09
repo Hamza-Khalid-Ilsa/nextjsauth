@@ -5,9 +5,7 @@ import Link from "next/link";
 import Header from "./Header";
 export default function Home() {
   const NavBar = () => {
-    return (
-      <Header/>
-    );
+    return <Header />;
   };
   return <NavBar />;
 }
