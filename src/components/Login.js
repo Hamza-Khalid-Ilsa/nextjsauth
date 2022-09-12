@@ -17,7 +17,7 @@ function Login() {
   const [numberFlage, setNumberFlage] = useState();
   const [emailFlage, setEmailFlage] = useState();
   const [passFlage, setPassFlage] = useState();
-  const [smsFlage,setSmsFlage]=useState(false);
+  const [smsFlage, setSmsFlage] = useState(false);
   const router = useRouter();
   const auth = getAuth(app);
 
@@ -106,7 +106,7 @@ function Login() {
       .then((result) => {
         // User signed in successfully.
         const user = result.user;
-        Cookies.set("user", JSON.stringify(user.accessToken), {
+        Cookies.set("user", user.accessToken, {
           expires: 1 / 24,
         });
         router.push("/Dashboard");
@@ -126,14 +126,14 @@ function Login() {
   const submitForm = (e) => {
     e.preventDefault();
     let user, errorCode, errorMessage;
-    if (numberFlage == true && passFlage == true && smsFlage==true) {
+    if (numberFlage == true && passFlage == true && smsFlage == true) {
       onSignbyphone(password);
     } else if (emailFlage == true && passFlage == true) {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
           user = userCredential.user;
-          Cookies.set("user", JSON.stringify(user.accessToken), {
+          Cookies.set("user", user.accessToken, {
             expires: 1 / 24,
           });
           router.push("/Dashboard");
@@ -146,7 +146,7 @@ function Login() {
           window.alert("Incorrect Credentiale");
         });
     } else {
-      if (emailFlage == false || numberFlage == false ) {
+      if (emailFlage == false || numberFlage == false) {
         window.alert("Wrong Email/Phone Number");
       }
       if (passFlage == false) {

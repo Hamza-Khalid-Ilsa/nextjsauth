@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 function Header(props) {
   let FirstHead = "",
     SecoundHead;
-  if (props.head.link1 == "/signIn") {
+  if (props.head.link1 == "/signUp") {
     FirstHead = "Sign up";
     SecoundHead = "Login";
   } else {

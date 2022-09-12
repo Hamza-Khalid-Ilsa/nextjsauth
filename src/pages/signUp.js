@@ -1,16 +1,16 @@
-import React from "react";
 import Header from "./Header";
-import ProfileComponent from "../components/ProfileComponent";
+import styles from "../styles/Home.module.css";
+import React, { useEffect, useState } from "react";
 import Cookies, { getCookie } from "cookies-next";
 import * as firebaseAdmin from "firebase-admin";
 import { authenticateUser } from "../firebase/admin";
-function Profile() {
+import Signup from "../components/Signup";
+
+function signUp(props) {
   return (
     <>
-      <Header
-        head={{ link1: "/Profile", link2: "/Dashboard", point: "afterlogin" }}
-      />
-      <ProfileComponent />
+      <Header head={{ link1: "/signUp", link2: "/login", point: "login" }} />
+      <Signup />
     </>
   );
 }
@@ -29,16 +29,16 @@ export async function getServerSideProps({ req, res }) {
   console.log(responce, "responce");
   if (responce === "User Authenticated") {
     return {
-      props: {},
+      redirect: {
+        destination: "/Dashboard",
+        permanent: false,
+      },
     };
   } else {
     return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
+      props: {},
     };
   }
 }
 
-export default Profile;
+export default signUp;

@@ -93,7 +93,7 @@ function Signup() {
           <input
             type="submit"
             className={`${styles.button} ${styles.button1}`}
-            value="Sigin"
+            value="Sign Up"
           />
         </form>
       </div>
