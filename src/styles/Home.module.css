@@ -177,7 +177,10 @@
   border: none;
   border-bottom: 2px solid red;
 }
-
+.profileimage{
+  border-radius: 50%;
+  
+}
 .button1 {
   background-color: white;
   color: black;

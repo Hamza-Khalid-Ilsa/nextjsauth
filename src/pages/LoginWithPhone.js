@@ -1,19 +1,17 @@
 import React from "react";
 import Header from "./Header";
-import ProfileComponent from "../components/ProfileComponent";
+import LoginWithPhoneComp from "../components/LoginWithPhoneComp";
 import { getCookie } from "cookies-next";
 import * as firebaseAdmin from "firebase-admin";
 import { authenticateUser } from "../firebase/admin";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]";
 
-function Profile() {
+function LoginWithPhone() {
   return (
     <>
-      <Header
-        head={{ link1: "/Profile", link2: "/Dashboard", point: "afterlogin" }}
-      />
-      <ProfileComponent />
+      <Header head={{ link1: "/signUp", link2: "/login", point: "login" }} />
+      <LoginWithPhoneComp />
     </>
   );
 }
@@ -29,19 +27,20 @@ export async function getServerSideProps({ req, res }) {
     });
   }
   const responce = await authenticateUser(cooki);
+
   const session = await unstable_getServerSession(req, res, authOptions);
   if (session || responce === "User Authenticated") {
     return {
-      props: {},
+      redirect: {
+        destination: "/Dashboard",
+        permanent: false,
+      },
     };
   } else {
     return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
+      props: {},
     };
   }
 }
 
-export default Profile;
+export default LoginWithPhone;

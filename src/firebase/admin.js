@@ -15,9 +15,7 @@ if (!firebaseAdmin.apps.length) {
 }
 
 export async function authenticateUser(user) {
-  console.log("mohad: ", user);
   let u = user;
-  console.log("U: ", u);
   let responce = "";
 
   user !== undefined
@@ -27,16 +25,13 @@ export async function authenticateUser(user) {
         .then((decodedToken) => {
           const uid = decodedToken.uid;
           responce = "User Authenticated";
-          console.log("User Authenticated");
           // ...
         })
         .catch((error) => {
           // Handle error
           responce = "Authentication Failed";
-          console.log("Authentication Failed");
         })
     : "";
-  console.log("gagag", responce);
 
   return responce;
 }

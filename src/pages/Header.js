@@ -3,6 +3,11 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import { getAuth, signOut as userSignOut } from "firebase/auth";
+import { app } from "../firebase/index";
+import {signOut,useSession} from "next-auth/react"
+
+
 function Header(props) {
   let FirstHead = "",
     SecoundHead;
@@ -16,10 +21,27 @@ function Header(props) {
 
   const Logout = () => {
     const router = useRouter();
+    const {data:session}=useSession();
 
     const logoutButton = () => {
-      Cookies.remove("user");
-      router.push("/login");
+      if(session)
+      {
+        signOut();
+      }
+      else{
+        const auth = getAuth(app);
+        userSignOut(auth)
+        .then(() => {
+          Cookies.remove("user");
+          router.push("/login");
+        })
+        .catch((error) => {
+          window.alert("user not signout");
+        });
+      }
+     
+
+      
     };
 
     if (props.head.link1 == "/Profile" || props.head.link2 == "/Dashboard") {

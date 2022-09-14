@@ -1,10 +1,11 @@
 import Header from "./Header";
-import styles from "../styles/Home.module.css";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Login from "../components/Login";
-import Cookies, { getCookie, removeCookies } from "cookies-next";
+import { getCookie } from "cookies-next";
 import * as firebaseAdmin from "firebase-admin";
 import { authenticateUser } from "../firebase/admin";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 function login() {
   return (
@@ -15,23 +16,6 @@ function login() {
   );
 }
 
-// export async function getServerSideProps({ req, res }) {
-
-//   const cooki = getCookie("user", { req, res }) || null;
-
-//   if (cooki === null) {
-//     return {
-//       props: {},
-//     };
-//   } else {
-//     return {
-//       redirect: {
-//         destination: "/Dashboard",
-//         permanent: false,
-//       },
-//     };
-//   }
-// }
 export async function getServerSideProps({ req, res }) {
   const cooki = getCookie("user", { req, res }) || "";
   if (!firebaseAdmin.apps.length) {
@@ -44,8 +28,9 @@ export async function getServerSideProps({ req, res }) {
     });
   }
   const responce = await authenticateUser(cooki);
-  console.log(responce, "responce");
-  if (responce === "User Authenticated") {
+
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (session || responce === "User Authenticated") {
     return {
       redirect: {
         destination: "/Dashboard",

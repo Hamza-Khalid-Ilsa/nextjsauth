@@ -1,9 +1,10 @@
 import Header from "./Header";
-import styles from "../styles/Home.module.css";
-import React, { useEffect, useState } from "react";
-import Cookies, { getCookie } from "cookies-next";
+import React from "react";
+import { getCookie } from "cookies-next";
 import * as firebaseAdmin from "firebase-admin";
 import { authenticateUser } from "../firebase/admin";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 import Signup from "../components/Signup";
 
 function signUp(props) {
@@ -26,8 +27,8 @@ export async function getServerSideProps({ req, res }) {
     });
   }
   const responce = await authenticateUser(cooki);
-  console.log(responce, "responce");
-  if (responce === "User Authenticated") {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (session || responce === "User Authenticated") {
     return {
       redirect: {
         destination: "/Dashboard",

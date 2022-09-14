@@ -2,9 +2,10 @@ import React from "react";
 import Header from "./Header";
 import { getCookie } from "cookies-next";
 import DashboardComponent from "../components/DashboardComponent";
-import { useRouter } from "next/router";
 import * as firebaseAdmin from "firebase-admin";
 import { authenticateUser } from "../firebase/admin";
+import { unstable_getServerSession } from "next-auth/next";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 function Dashboard({ props }) {
   return (
@@ -28,8 +29,9 @@ export async function getServerSideProps({ req, res }) {
     });
   }
   const responce = await authenticateUser(cooki);
-  console.log(responce, "responce");
-  if (responce === "User Authenticated") {
+
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (session || responce === "User Authenticated") {
     return {
       props: {},
     };
